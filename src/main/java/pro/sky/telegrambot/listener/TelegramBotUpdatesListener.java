@@ -7,11 +7,8 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.model.NotificationTask;
 import pro.sky.telegrambot.service.NotificationTaskService;
-
 import javax.annotation.PostConstruct;
 import java.util.List;
 
@@ -20,10 +17,13 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
 
-    @Autowired
-    private TelegramBot telegramBot;
-    @Autowired
-    private NotificationTaskService notificationTaskService;
+    private final TelegramBot telegramBot;
+    private final NotificationTaskService notificationTaskService;
+
+    public TelegramBotUpdatesListener(TelegramBot telegramBot, NotificationTaskService notificationTaskService) {
+        this.telegramBot = telegramBot;
+        this.notificationTaskService = notificationTaskService;
+    }
 
     @PostConstruct
     public void init() {
